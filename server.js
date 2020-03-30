@@ -1,6 +1,9 @@
 //引入express
 const express = require('express')
 
+//引入express-async-errors
+require('express-async-errors');
+
 //引入抽离出去的路由文件
 const postRouter = require('./routers/postRouter')
 
@@ -14,7 +17,14 @@ app.use(express.urlencoded({extended: true}));
 //静态资源托管处理
 app.use(express.static('./public'));
 
-app.use('/posts', postRouter)
+app.use('/posts', postRouter);
+
+//统一错误处理
+app.use((err,req,res,next) => {
+    console.error(err);
+    res.status(500).send(err.message);
+    next();
+})
 
 //监听端口，启动服务
 app.listen(3000, () => {
