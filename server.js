@@ -11,6 +11,9 @@ const app = express()
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+//静态资源托管处理
+app.use(express.static('./public'));
+
 app.use('/posts', postRouter)
 
 //监听端口，启动服务
