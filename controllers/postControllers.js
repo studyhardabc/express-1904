@@ -1,7 +1,8 @@
 //帖子的控制器，暴露一系列中间件方法给到帖子的路由去使用
 
 //引入PostModel
-const PostModel = require('../models/postModels')
+const PostModel = require('../models/postModels');
+const jsonwebtoken = require('jsonwebtoken');
 
 //查询帖子列表
 exports.index = async(req,res) => {
@@ -35,31 +36,59 @@ exports.index = async(req,res) => {
 };
 
 //创建帖子
+// exports.create = async(req,res) => {
+//     //获取前端传递过来的参数
+//     const {title,content} = req.body;
+
+//     //Model.create
+//     // PostModel.create({
+//     //     title,
+//     //     content
+//     // })
+//     // .then(() => {
+//     //     res.send({
+//     //         code:0,
+//     //         msg:'成功'
+//     //     })
+//     // })
+//     // .catch((error) => {
+//     //     res.send({
+//     //         code: -1,
+//     //         msg: '失败'
+//     //     })
+//     // })
+
+//     await PostModel.create({title,content});
+//     res.send({code:0, msg: '成功'});
+// }
+
 exports.create = async(req,res) => {
-    //获取前端传递过来的参数
-    const {title,content} = req.body;
+    //验证token是否存在并有效，token一般都是请求头传递过来
 
-    //Model.create
-    // PostModel.create({
-    //     title,
-    //     content
-    // })
-    // .then(() => {
-    //     res.send({
-    //         code:0,
-    //         msg:'成功'
-    //     })
-    // })
-    // .catch((error) => {
-    //     res.send({
-    //         code: -1,
-    //         msg: '失败'
-    //     })
-    // })
+    const token = req.get('Authorization')
 
-    await PostModel.create({title,content});
-    res.send({code:0, msg: '成功'});
+    if(token){
+        //存在，还要去验证token是否有效
+        jsonwebtoken.verify(token, 'abc', async (err,data) => {
+            if(err){
+                //验证失败
+                res.status(401).send('身份验证失败');
+            }else{
+                //验证成功
+                const {title,content} = req.body;
+
+                await PostModel.create({title,content});
+                res.send({code:0, msg: '成功'});
+            }
+        })
+
+    }else{
+        res.status(401).send('请携带token');
+    }
+
+
 }
+
 
 //更新帖子
 exports.update = async(req,res) => {

@@ -273,6 +273,13 @@ define({ "api": [
             "optional": false,
             "field": "msg",
             "description": "<p>错误消息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
           }
         ]
       }

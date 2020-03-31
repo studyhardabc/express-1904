@@ -1,4 +1,5 @@
 const UserModer = require('../models/userModels');
+const jsonwebtoken = require('jsonwebtoken');
 
 // exports.register = async (req,res) => {
 //     //要获取前端传递过来的用户信息 body方法接收
@@ -51,5 +52,17 @@ exports.login = async (req,res) => {
         return;
     }
 
-    res.send({code:0, msg: '登录成功'});
+    //生成token
+    const token = jsonwebtoken.sign({
+        //思考将哪些信息写入到token中，一般时用户角色信息，用户id信息，不要写太多数据进去
+        userId: data._id,
+        nickname: data.nickname
+    }, 
+        'abc',
+        {
+            expiresIn: '2h'
+        }
+    );
+
+    res.send({code:0, msg: '登录成功', token});
 }
