@@ -75,10 +75,24 @@
           },
           {
             "group": "Success 200",
-            "type": "Array",
+            "type": "Object",
             "optional": false,
             "field": "data",
-            "description": "<p>帖子数组.</p>"
+            "description": "<p>数据.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "data[list]",
+            "description": "<p>帖子数据.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "data[totalPage]",
+            "description": "<p>总的页数.</p>"
           }
         ]
       }

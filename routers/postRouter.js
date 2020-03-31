@@ -20,7 +20,9 @@ const router = express.Router()
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
- * @apiSuccess {Array} data  帖子数组.
+ * @apiSuccess {Object} data  数据.
+ * @apiSuccess {Array} data[list]  帖子数据.
+ * @apiSuccess {Number} data[totalPage]  总的页数.
  */
 router.get('/', index);
 
