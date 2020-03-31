@@ -31,6 +31,36 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "http://localhost:3000/posts/:id",
+    "title": "帖子详情",
+    "group": "Post",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>错误状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>错误消息.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routers/postRouter.js",
+    "groupTitle": "Post",
+    "name": "GetHttpLocalhost3000PostsId"
+  },
+  {
+    "type": "get",
     "url": "/posts",
     "title": "查询帖子",
     "group": "Post",

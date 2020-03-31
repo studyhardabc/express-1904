@@ -4,7 +4,7 @@
 const express = require('express')
 
 //引入postControllers
-const {index,create,update,remove} = require('../controllers/postControllers')
+const {index,create,update,remove,show} = require('../controllers/postControllers')
 
 
 //生成express.Router的实例
@@ -61,6 +61,15 @@ router.put('/:id', update);
  * @apiSuccess {String} msg  错误消息.
  */
 router.delete('/:id', remove);
+
+/**
+ * @api {get} http://localhost:3000/posts/:id 帖子详情
+ * @apiGroup Post
+ *
+ * @apiSuccess {Number} code 错误状态码.
+ * @apiSuccess {String} msg  错误消息.
+ */
+router.get('/:id', show);
 
 
 
