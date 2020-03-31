@@ -3,12 +3,14 @@ $(function (){
     var pageNum = 1;//当前页码数
     var pageSize = 5;//每页显示条数
     var totalPage = 1;//总的页数
+    var searchTitle = '' //标题搜索关键字
   
     //定义一个getData的方法专门去发送ajax请求获取数据
     function getData(){
         $.get('http://localhost:3000/posts',{
             pageNum:pageNum,
-            pageSize:pageSize
+            pageSize:pageSize,
+            title:searchTitle
         }, function (res){
             console.log(res);
         if(res.code == 0){//只有等于0的时候才是真正的成功
@@ -69,5 +71,14 @@ $(function (){
         pageNum = toPage;
         //再调用getData
         getData();
+    })
+
+    //点击搜索框确定按钮
+    $('#search-btn').click(function (){
+      var value = $('#search-input').val();
+      searchTitle = value;
+      pageNum = 1;//将pageNum重置为1
+      //发送ajax请求，还是去调用getData这个，但是这个方法需要修改点内容
+      getData();
     })
 });

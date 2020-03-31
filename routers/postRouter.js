@@ -15,8 +15,9 @@ const router = express.Router()
  * @api {get} /posts 查询帖子
  * @apiGroup Post
  * 
- * @apiParam (query) {String} pageNum=1 页码
- * @apiParam (query) {String} pageSize=2 每页显示条数
+ * @apiParam (query) {String} pageNum=1 页码（可选）
+ * @apiParam (query) {String} pageSize=2 每页显示条数（可选）
+ * @apiParam (query) {String} title 搜索关键字（可选）
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.

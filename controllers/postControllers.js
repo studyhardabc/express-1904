@@ -8,15 +8,17 @@ exports.index = async(req,res) => {
     //获取前端传递过来的分页数据 pageNum,pageSize query是问号传参
     const pageNum = parseInt(req.query.pageNum) || 1;//页码 问号传参过来都是字符串，所有要转成数字
     const pageSize = parseInt(req.query.pageSize) || 2;//每页显示条数
+    //获取前端传递过来的搜索的数据 title
+    const title = req.query.title;
 
     //查询数据库 Model.find().skip(pageNum - 1 * pageSize).limit(pageSize)
-    const data = await PostModel.find()
+    const data = await PostModel.find({title: new RegExp(title)})
     .skip((pageNum - 1) * pageSize)
     .limit(pageSize);
 
     //前端还需要早点一共有多少页，需要后台告诉他
     //totalPage = Math.ceil(总条数 / 每页显示条数) = Math.ceil(总条数 / pageSize)
-    const total = await PostModel.find().countDocuments(); //查找数据库，然后用count这个方法可以得到数据库有多少条
+    const total = await PostModel.find({title: new RegExp(title)}).countDocuments(); //查找数据库，然后用count这个方法可以得到数据库有多少条
     //再计算出totalPage
     const totalPage = Math.ceil(total / pageSize);
 

@@ -43,7 +43,7 @@
             "optional": false,
             "field": "pageNum",
             "defaultValue": "1",
-            "description": "<p>页码</p>"
+            "description": "<p>页码（可选）</p>"
           },
           {
             "group": "query",
@@ -51,7 +51,14 @@
             "optional": false,
             "field": "pageSize",
             "defaultValue": "2",
-            "description": "<p>每页显示条数</p>"
+            "description": "<p>每页显示条数（可选）</p>"
+          },
+          {
+            "group": "query",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>搜索关键字（可选）</p>"
           }
         ]
       }
