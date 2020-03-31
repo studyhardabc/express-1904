@@ -41,6 +41,12 @@ userSchema.pre('save', function (next){
     next();
 })
 
+//给UserModel的实力(document)用户，添加一个实例方法
+//验证密码
+userSchema.methods.comparePassword = function (password){
+    return bcryptjs.compareSync(password,this.password)//原密码，加密后的密码,返回一个布尔类型
+}
+
 const UserModel = mongoose.model('user',userSchema);
 
 module.exports = UserModel;

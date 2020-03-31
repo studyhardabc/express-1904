@@ -34,6 +34,22 @@ exports.register = async (req,res) => {
     }
 }
 
-exports.login = (req,res) => {
-    res.send('用户登录');
+exports.login = async (req,res) => {
+    //获取前端传递过来的email和password
+    const {email,password} = req.body;
+    //根据email去查询数据库
+    const data = await UserModer.findOne({email});
+    //判断data是否有值
+    if(!data){
+        res.send({code: -1, msg: '用户邮箱不正确'});
+        return;
+    }
+
+    //验证密码是否正确
+    if(!data.comparePassword(password)){
+        res.send({code: -1, msg: '密码不正确'});
+        return;
+    }
+
+    res.send({code:0, msg: '登录成功'});
 }
