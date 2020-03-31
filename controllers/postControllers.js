@@ -5,10 +5,22 @@ const PostModel = require('../models/postModels')
 
 //查询帖子列表
 exports.index = async(req,res) => {
-    //Model.find()
-    const data = await PostModel.find();//为了能够处理async，await的产生的异常，还需要取使用一个依赖包
-    res.send({ code:0, msg: '成功', data });
-}
+    //获取前端传递过来的分页数据 pageNum,pageSize query是问号传参
+    const pageNum = req.query.pageNum || 1;//页码
+    const pageSize = req.query.pageSize || 2;//每页显示条数
+
+    //查询数据库 Model.find().skip(pageNum - 1 * pageSize).limit(pageSize)
+    const data = await PostModel.find()
+    .skip((pageNum - 1) * pageSize)
+    .limit(pageSize);
+
+    //响应
+    res.send({
+        code:0,
+        msg:'0k',
+        data
+    })
+};
 
 //创建帖子
 exports.create = async(req,res) => {
