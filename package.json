@@ -21,8 +21,10 @@
   "homepage": "https://github.com/studyhardabc/express-1904#readme",
   "dependencies": {
     "apidoc": "^0.20.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "js-md5": "^0.7.3",
     "mongoose": "^5.9.6"
   }
 }

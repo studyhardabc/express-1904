@@ -6,6 +6,7 @@ require('express-async-errors');
 
 //引入抽离出去的路由文件
 const postRouter = require('./routers/postRouter')
+const userRouter = require('./routers/userRouter')
 
 //实例化一个express的实力
 const app = express()
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
 app.use('/posts', postRouter);
+app.use(userRouter);
 
 //统一错误处理
 app.use((err,req,res,next) => {
