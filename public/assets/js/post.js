@@ -26,6 +26,9 @@ $(function (){
                   <small class="text-black-50 text-right">${moment(item.updatedAt).format('YYYY-MM-DD hh:mm:ss')}</small>
                 </div>
                 <div class="font-weight-light text-truncate">${item.content}</div>
+                <div class="mt-2 text-black-50">
+                <small>${item.userId.nickname}</small>
+              </div>
               </li>
                 `;
             })

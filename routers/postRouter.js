@@ -35,7 +35,7 @@ router.get('/', index);
  * @apiGroup Post
  * 
  * @apiParam {String} title 帖子标题.
- * @apiParam {String} title 帖子内容.
+ * @apiParam {String} content 帖子内容.
  * @apiParam (Headers) {String} Authorization  token信息.
  *
  * @apiSuccess {Number} code 错误状态码.
@@ -49,9 +49,11 @@ router.post('/', auth,create);
  *
  * @apiParam {String} title 帖子标题
  * @apiParam {String} content 帖子内容
+ * @apiParam (Headers) {String} Authorization  token信息.
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
+ * @apiSuccess {Object} data  更新完成之后的帖子信息.
  */
 router.put('/:id', auth,update);
 
@@ -70,6 +72,7 @@ router.delete('/:id', auth,remove);
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
+ * @apiSuccess {Object} data  帖子信息.
  */
 router.get('/:id', show);
 

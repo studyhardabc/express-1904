@@ -1,4 +1,6 @@
 const UserModer = require('../models/userModels');
+const path = require('path');
+const fs = require('fs');
 const jsonwebtoken = require('jsonwebtoken');
 
 // exports.register = async (req,res) => {
@@ -65,4 +67,47 @@ exports.login = async (req,res) => {
     );
 
     res.send({code:0, msg: '登录成功', token});
+}
+
+exports.getInfo = async (req,res) => {
+    //获取用户id，通过req.auth
+    const {userId} =req.auth;
+    //查询数据库
+    //password: 0 是把这个字段在data里不显示
+    const data = await UserModer.findOne({_id : userId},{password: 0});
+    //响应
+    res.send({
+        code: 0,
+        msg: 'ok',
+        data
+    })
+}
+
+exports.updata = async (req,res) => {
+    //获取用户id
+    const {userId} = req.auth;
+    //定义一个后续用来修改的对象
+    let updateData = {};
+    if(req.file.path){
+        const newFilename = `${req.file.filename}-${req.file.originalname}`;
+        const newFilepath = path.resolve(__dirname, '../public', newFilename);
+
+        //读文件
+        const fileData = fs.readFileSync(req.file.path);
+
+        //写文件
+        fs.writeFileSync(newFilepath,fileData);
+
+        //给updateData设置avatar
+        updateData.avatar = `http://localhost:3000/${newFilename}`;
+
+        //修改数据库
+        await UserModer.updateOne({_id : userId}, updateData);
+        const data = await UserModer.findOne({_id : userId}, {password: 0});
+        res.send({
+            code: 0,
+            msg: '修改成功',
+            data
+        })
+    }
 }

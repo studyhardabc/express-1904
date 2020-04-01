@@ -13,6 +13,7 @@ exports.index = async(req,res) => {
 
     //查询数据库 Model.find().skip(pageNum - 1 * pageSize).limit(pageSize)
     const data = await PostModel.find({title: new RegExp(title)})
+    .populate('userId', ['nickname','email'])
     .skip((pageNum - 1) * pageSize)
     .limit(pageSize);
 
@@ -109,7 +110,8 @@ exports.update = async(req,res) => {
     const { id } = req.params;
     //Model.updateOne()
     await PostModel.updateOne({ _id: id }, req.body)
-    res.send({ code: 0, msg: '成功'})
+    const data = await PostModel.findOne({_id: id});
+    res.send({ code: 0, msg: '成功',data});
 }
 
 //删除帖子
@@ -127,6 +129,6 @@ exports.show = async(req,res) => {
 
     //Model.find() => []
     //Model.findOne() => {}
-    const data = await PostModel.findOne({ _id: id });
+    const data = await PostModel.findOne({ _id: id }).populate('userId',['nickname','email'])
     res.send({ code: 0, msg: '成功',data})
 }

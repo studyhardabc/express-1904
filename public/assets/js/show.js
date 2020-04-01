@@ -25,7 +25,7 @@ $(function (){
             <h1 class="mb-5 font-weight-light">${res.data.title}</h1>
             <div class="py-4">${res.data.content}</div>
             <div class="mt-2 text-black-50">
-              <small>张三</small>
+              <small>${res.data.userId.nickname}</small>
             </div>
             <div class="mt-2">
               <a href="#" class="badge badge-pill badge-primary px-2 py-1">工作</a>
@@ -34,10 +34,10 @@ $(function (){
             <div class="border-top py-4 mt-4">
               <ul class="nav justify-content-end">
                 <li class="nav-item">
-                  <a href="./edit.html" class="nav-link btn btn-link">Edit</a>
+                  <a href="./edit.html?id=${res.data._id}" class="nav-link btn btn-link">Edit</a>
                 </li>
                 <li class="nav-item">
-                  <a href="javascript:;" class="nav-link btn btn-link">Delete</a>
+                  <a id="delete_post" href="javascript:;" class="nav-link btn btn-link">Delete</a>
                 </li>
               </ul>
             </div>
@@ -45,4 +45,44 @@ $(function (){
         }
         $('.container').html(html);
     });
+
+
+    //删除功能
+$('.container').on('click',"#delete_post", function (){
+  //判断是否有登录
+  if(!isLogined()){
+    //没有登录
+    alert('请登录');
+    window.location.href = '/login.html';
+    return;
+  }
+
+  //2次确认是否删除
+  if(!confirm('你确认要删除吗?')){
+    //点击取消那就不删除
+    return;
+  }
+
+  var url = `http://localhost:3000/posts/${result.id}`;
+  $.ajax({
+    url:url,
+    type:'delete',
+    headers: {
+      Authorization: localStorage.getItem('token')
+    },
+    success: function (res){
+      if(res.code == 0){
+        alert('删除成功');
+        window.location.href = './index.html';
+      }else{
+        console.log(res);
+      }
+    }
+  })
 })
+
+
+
+
+})
+
