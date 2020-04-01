@@ -31,37 +31,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "http://localhost:3000/posts/:id",
-    "title": "帖子详情",
-    "group": "Post",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "code",
-            "description": "<p>错误状态码.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>错误消息.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routers/postRouter.js",
-    "groupTitle": "Post",
-    "name": "GetHttpLocalhost3000PostsId"
-  },
-  {
-    "type": "get",
-    "url": "/posts",
+    "url": "http://localhost:3000/posts",
     "title": "查询帖子",
     "group": "Post",
     "parameter": {
@@ -137,13 +107,42 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "routers/postRouter.js",
     "groupTitle": "Post",
-    "name": "GetPosts"
+    "name": "GetHttpLocalhost3000Posts"
   },
   {
-    "type": "post",
-    "url": "http://localhost:3000/posts",
-    "title": "创建一个帖子",
-    "name": "create",
+    "type": "get",
+    "url": "http://localhost:3000/posts/:id",
+    "title": "帖子详情",
+    "group": "Post",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>错误状态码.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>错误消息.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routers/postRouter.js",
+    "groupTitle": "Post",
+    "name": "GetHttpLocalhost3000PostsId"
+  },
+  {
+    "type": "put",
+    "url": "http://localhost:3000/posts/:id",
+    "title": "编辑帖子",
     "group": "Post",
     "parameter": {
       "fields": {
@@ -153,7 +152,14 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "title",
-            "description": "<p>帖子标题.</p>"
+            "description": "<p>帖子标题</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "content",
+            "description": "<p>帖子内容</p>"
           }
         ]
       }
@@ -180,13 +186,14 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "routers/postRouter.js",
-    "groupTitle": "Post"
+    "groupTitle": "Post",
+    "name": "PutHttpLocalhost3000PostsId"
   },
   {
-    "type": "put",
-    "url": "http://localhost:3000/posts/:id",
-    "title": "编辑帖子",
-    "name": "update",
+    "type": "post",
+    "url": "http://localhost:3000/posts",
+    "title": "创建帖子",
+    "name": "create",
     "group": "Post",
     "parameter": {
       "fields": {
@@ -196,14 +203,16 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "title",
-            "description": "<p>帖子标题</p>"
-          },
+            "description": "<p>帖子标题.</p>"
+          }
+        ],
+        "Headers": [
           {
-            "group": "Parameter",
+            "group": "Headers",
             "type": "String",
             "optional": false,
-            "field": "content",
-            "description": "<p>帖子内容</p>"
+            "field": "Authorization",
+            "description": "<p>token信息.</p>"
           }
         ]
       }
