@@ -20,7 +20,7 @@ $(function (){
     console.log(result.id);
 
     $.ajax({
-        url: `/${result.id}`,
+        url: `/posts/${result.id}`,
         type: 'get',
         success: function (res){
             $('#inp').val(res.data.title),
