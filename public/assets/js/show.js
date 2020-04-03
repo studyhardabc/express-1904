@@ -18,7 +18,7 @@ $(function (){
     
 
     //直接发送ajax请求获取详情数据
-    var url = `/${result.id}`;
+    var url = `/posts/${result.id}`;
     $.get(url,function (res){
         if(res.code == 0){
             var html = `
