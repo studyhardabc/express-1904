@@ -30,7 +30,7 @@ $(function (){
 
     $('#inp2').click(function (){
         $.ajax({
-            url: `/${result.id}`,
+            url: `/posts/${result.id}`,
             type: 'put',
             data: {
                 title: $('#inp').val(),
