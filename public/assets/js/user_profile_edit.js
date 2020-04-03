@@ -13,7 +13,7 @@ $(function (){
         formData.append('avatar',$('#inp')[0].files[0]);
 
         $.ajax({
-            url: 'http://localhost:3000/users/updata',
+            url: '/users/updata',
             type: 'put',
             data: formData,
             headers: {

@@ -1,5 +1,6 @@
 //引入express
-const express = require('express')
+const express = require('express');
+require('dotenv').config();
 
 //引入express-async-errors
 require('express-async-errors');
@@ -29,6 +30,6 @@ app.use((err,req,res,next) => {
 })
 
 //监听端口，启动服务
-app.listen(3000, () => {
+app.listen(4000, () => {
     console.log('服务启动成功');
 })

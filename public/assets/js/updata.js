@@ -20,7 +20,7 @@ $(function (){
     console.log(result.id);
 
     $.ajax({
-        url: `http://localhost:3000/posts/${result.id}`,
+        url: `/${result.id}`,
         type: 'get',
         success: function (res){
             $('#inp').val(res.data.title),
@@ -30,7 +30,7 @@ $(function (){
 
     $('#inp2').click(function (){
         $.ajax({
-            url: `http://localhost:3000/posts/${result.id}`,
+            url: `/${result.id}`,
             type: 'put',
             data: {
                 title: $('#inp').val(),

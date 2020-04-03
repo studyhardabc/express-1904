@@ -78,7 +78,7 @@ $('#navbar-nav-right').on('click','#logout-btn', function (){
 function getUserInfo(){
     return new Promise((resolve,reject) => {
         $.ajax({
-            url: 'http://localhost:3000/getInfo',
+            url: '/getInfo',
             type: 'get',
             headers: {
                 Authorization: localStorage.getItem('token')

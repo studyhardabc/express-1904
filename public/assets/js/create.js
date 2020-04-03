@@ -7,7 +7,7 @@ $(function (){
 
     $('#create-post').click(function (){
         $.ajax({
-            url: 'http://localhost:3000/posts',
+            url: '/posts',
             type: 'post',
             data: {
                 title: $('#inp').val(),

@@ -9,7 +9,7 @@ $(function() {
   // 定义一个 getData 的方法专门去发送 ajax 请求获取数据
   function getData() {
     $.get(
-      "http://localhost:3000/posts",
+      "/posts",
       {
         pageNum: pageNum,
         pageSize: pageSize,

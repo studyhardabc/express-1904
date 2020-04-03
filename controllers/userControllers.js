@@ -99,7 +99,7 @@ exports.updata = async (req,res) => {
         fs.writeFileSync(newFilepath,fileData);
 
         //给updateData设置avatar
-        updateData.avatar = `http://localhost:3000/${newFilename}`;
+        updateData.avatar = `${process.env.BASEURL}/${newFilename}`;
 
         //修改数据库
         await UserModer.updateOne({_id : userId}, updateData);
