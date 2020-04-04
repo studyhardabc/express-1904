@@ -4,6 +4,9 @@ $(function (){
     var pageSize = 5;//每页显示条数
     var totalPage = 1;//总的页数
     var searchTitle = '' //标题搜索关键字
+
+    // //需要登录
+    // needLogin();
   
     //定义一个getData的方法专门去发送ajax请求获取数据
     function getData(){
