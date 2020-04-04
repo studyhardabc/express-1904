@@ -14,8 +14,13 @@ $(function (){
                     return;
                 }
                 localStorage.setItem('token',res.token);
-                window.location.href = './post/index.html'
+                localStorage.setItem('username',res.nickname);
+                window.location.href = './post/index.html';
             }
         })
+    })
+
+    $('#register-btn').click(function (){
+        window.location.href = './register.html';
     })
 })

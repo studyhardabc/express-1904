@@ -53,7 +53,7 @@ exports.login = async (req,res) => {
         res.send({code: -1, msg: '密码不正确'});
         return;
     }
-
+    const nickname = data.nickname;
     //生成token
     const token = jsonwebtoken.sign({
         //思考将哪些信息写入到token中，一般时用户角色信息，用户id信息，不要写太多数据进去
@@ -66,7 +66,7 @@ exports.login = async (req,res) => {
         }
     );
 
-    res.send({code:0, msg: '登录成功', token});
+    res.send({code:0, msg: '登录成功', token,nickname});
 }
 
 exports.getInfo = async (req,res) => {

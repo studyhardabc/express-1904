@@ -20,6 +20,7 @@ $(function (){
     //直接发送ajax请求获取详情数据
     var url = `/posts/${result.id}`;
     $.get(url,function (res){
+      
         if(res.code == 0){
             var html = `
             <h1 class="mb-5 font-weight-light">${res.data.title}</h1>
@@ -34,7 +35,7 @@ $(function (){
             <div class="border-top py-4 mt-4">
               <ul class="nav justify-content-end">
                 <li class="nav-item">
-                  <a href="./edit.html?id=${res.data._id}" class="nav-link btn btn-link">Edit</a>
+                  <span id="btn" class="nav-link btn btn-link">Edit</span>
                 </li>
                 <li class="nav-item">
                   <a id="delete_post" href="javascript:;" class="nav-link btn btn-link">Delete</a>
@@ -49,40 +50,81 @@ $(function (){
 
     //删除功能
 $('.container').on('click',"#delete_post", function (){
-  //判断是否有登录
-  if(!isLogined()){
-    //没有登录
-    alert('请登录');
-    window.location.href = '/login.html';
-    return;
-  }
+    //判断是否有登录
+    if(!isLogined()){
+      //没有登录
+      alert('请登录');
+      window.location.href = '/login.html';
+      return;
+    }
+  
+    //2次确认是否删除
+    if(!confirm('你确认要删除吗?')){
+      //点击取消那就不删除
+      return;
+    }
+  
+    var url = `/posts/${result.id}`;
 
-  //2次确认是否删除
-  if(!confirm('你确认要删除吗?')){
-    //点击取消那就不删除
-    return;
-  }
-
-  var url = `/posts/${result.id}`;
-  $.ajax({
-    url:url,
-    type:'delete',
-    headers: {
-      Authorization: localStorage.getItem('token')
-    },
-    success: function (res){
-      if(res.code == 0){
-        alert('删除成功');
-        window.location.href = './index.html';
+    var name = localStorage.getItem('username');//先判断账号是否一致
+    $.get(url, function (res){
+      console.log(res);
+      
+      if(name !== res.data.userId.nickname){
+        alert('不能删除别人的帖子');
+        return;
       }else{
-        console.log(res);
+        $.ajax({
+          url:url,
+          type:'delete',
+          headers: {
+            Authorization: localStorage.getItem('token')
+          },
+          success: function (res){
+            if(res.code == 0){
+              alert('删除成功');
+              window.location.href = './index.html';
+            }else{
+              console.log(res);
+            }
+          }
+        })
       }
+    })
+})
+
+//点击修改帖子
+$('.container').on('click','#btn', function (){
+  var name = localStorage.getItem('username');
+  $.get(url, function (res){
+    console.log(res.data.userId.nickname);
+    
+    if(name !== res.data.userId.nickname){
+      alert('不能修改别人的帖子');
+      return;
+    }else{
+      window.location.href = `./edit.html?id=${res.data._id}`;
     }
   })
 })
 
 
-
-
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

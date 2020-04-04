@@ -45,7 +45,7 @@ router.post('/', auth,create);
 
 /**
  * @api {put} http://localhost:3000/posts/:id 编辑帖子
- * @apiGroup Post
+ * @apiGroup put
  *
  * @apiParam {String} title 帖子标题
  * @apiParam {String} content 帖子内容
@@ -59,7 +59,7 @@ router.put('/:id', auth,update);
 
 /**
  * @api {delete} http://localhost:3000/posts/:id 删除帖子
- * @apiGroup Post
+ * @apiGroup delete
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
@@ -68,7 +68,7 @@ router.delete('/:id', auth,remove);
 
 /**
  * @api {get} http://localhost:3000/posts/:id 帖子详情
- * @apiGroup Post
+ * @apiGroup get
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
