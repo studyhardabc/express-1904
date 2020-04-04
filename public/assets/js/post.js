@@ -84,4 +84,11 @@ $(function (){
       //发送ajax请求，还是去调用getData这个，但是这个方法需要修改点内容
       getData();
     })
+
+    $('#span1').click(function (){
+      window.location.href = '/post/chatroom.html';
+    })
+
+
+
 });

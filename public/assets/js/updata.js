@@ -49,5 +49,10 @@ $(function (){
             }
         })
     })
+
+    $('#span1').click(function (){
+        window.location.href = '/post/chatroom.html';
+      })
+  
     
 })

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>express-1904-chat</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-info navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/img/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" />
+      <Bootstrap></Bootstrap>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">帖子列表</a>
+          <span id="span1" class="nav-link" style="cursor: pointer;">聊天室</span>
+        </li>
+      </ul>
+      <ul id="navbar-nav-right" class="navbar-nav">
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h1>聊天室</h1>
+
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div id="messages" class="mb-4"
+          style="height: 300px; overflow-y: auto; border: 1px solid #000;border-radius: 5px; padding: 10px;">
+
+          <!-- <div class="my-4 d-flex">
+            <div class="mr-2">
+              <small class="text-black-50">张三：</small>
+            </div>
+            <div>
+              hello
+            </div>
+          </div> -->
+
+          <!-- <div class="my-4 d-flex justify-content-end">
+            <div>
+              hello
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mx-auto d-flex">
+        <input id="value" type="text" class="form-control mr-2">
+        <button id="btn" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="/assets/js/common.js"></script>
+
+  <!-- 引入 socketio 的客户端js文件 -->
+  <script src="/assets/lib/socket.io.js"></script>
+  <script>
+    $(function (){
+      //建立socketio的连接
+      const socket = io();
+
+      var name = localStorage.getItem('username');
+      
+      //触发setName这个事件
+      socket.emit('setName',name);
+
+      //监听message这个服务的触发的事件
+      socket.on('message', data => {
+        //data就是传递过来的信息 {username: xxx, message: yyy}
+        //直接追加元素到messages的元素中
+        //判断是自己的消息还是别人发来的消息
+        if(data.username === name){
+          //自己
+          $('#messages').append(`
+          <div class="my-4 d-flex justify-content-end">
+            <div>
+              ${data.message}
+            </div>
+          </div>
+          `)
+        }else{
+          //其他
+          $('#messages').append(`
+        <div class="my-4 d-flex">
+            <div class="mr-2">
+              <small class="text-black-50">${data.username}：</small>
+            </div>
+            <div>
+              ${data.message}
+            </div>
+          </div>
+        `)
+        }
+
+        //让messages元素的滚动条一直处于最底部
+        $('#messages').stop().animate({
+          scrollTop: $('#messages').height() + $('#messages').scrollTop()
+        }, 'slow');
+
+      })
+
+      //监听btn按钮的点击事件
+      $('#btn').click(function (){
+        //获取value
+        var value = $('#value').val();
+        if(!value) return
+        //触发服务器的message事件
+        socket.emit('message', {
+          message: value
+        })
+        $('#value').val('');
+      })
+
+      $('#value').keydown(function (e){
+        if(e.keyCode == 13){
+          var value = $('#value').val();
+        if(!value) return
+        //触发服务器的message事件
+        socket.emit('message', {
+          message: value
+        })
+        $('#value').val('');
+        }
+      }) 
+
+
+      needLogin();
+
+
+
+
+
+      
+    })
+  </script>
+</body>
+
+</html>

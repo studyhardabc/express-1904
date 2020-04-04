@@ -61,5 +61,4 @@ router.get('/getInfo', auth, userController.getInfo)
  */
 router.put('/users/updata', auth, upload.single('avatar'), userController.updata)
 
-
 module.exports = router;
